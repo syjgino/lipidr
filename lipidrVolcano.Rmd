@@ -1,0 +1,54 @@
+---
+title: "Volcano Plot"
+output:
+  html_document:
+    df_print: paged
+    fig_width: 10
+    fig_height: 6
+---
+
+Age Sex BMI Gene NoMiss
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(lipidr)
+
+use_interactive_graphics(interactive = TRUE)
+
+mydf <- read.csv("C:/Users/baolongsu/Desktop/Data/IMSS New/PCA20200108/volcano/PCA_nomiss_agesexBMIgene_1.csv", 
+                 header = TRUE, row.names = 1)
+a <- mydf
+a <- log(a)
+
+mylip <- as_lipidomics_experiment(a, logged = TRUE, normalized = TRUE)
+mylip<-add_sample_annotation(mylip, "C:/Users/baolongsu/Desktop/Data/IMSS New/PCA20200108/volcano/PCA_nomiss_agesexBMIgene_annot.csv")
+
+
+myderesult <- de_analysis(mylip,  Case-Control, measure = "Area")
+plot_results_volcano(myderesult, show.labels = TRUE)
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+myderesult <- de_analysis(mylip, group_col = "Gender",  MUJER-HOMBRE, measure = "Area")
+plot_results_volcano(myderesult, show.labels = TRUE)
+```
+
+Age Sex Gene NoMiss
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+mydf <- read.csv("C:/Users/baolongsu/Desktop/Data/IMSS New/PCA20200108/volcano/PCA_nomiss_agesexgene_1.csv", 
+                 header = TRUE, row.names = 1)
+a <- mydf
+a <- log(a)
+
+mylip <- as_lipidomics_experiment(a, logged = TRUE, normalized = TRUE)
+mylip<-add_sample_annotation(mylip, "C:/Users/baolongsu/Desktop/Data/IMSS New/PCA20200108/volcano/PCA_nomiss_agesexgene_annot.csv")
+
+
+myderesult <- de_analysis(mylip,  Case-Control, measure = "Area")
+plot_results_volcano(myderesult, show.labels = TRUE)
+```
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+myderesult <- de_analysis(mylip, group_col = "Gender", MUJER-HOMBRE, measure = "Area")
+plot_results_volcano(myderesult, show.labels = TRUE)
+```
+
